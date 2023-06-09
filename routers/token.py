@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", response_class=TokenResBody)
+@router.get("/", response_model=TokenResBody)
 async def get_token(code: str):
     form = config.sso.dict()
     form["code"] = code

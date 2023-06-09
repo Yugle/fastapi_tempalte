@@ -29,4 +29,6 @@ jwt:
 ignore_auth_urls:
     - /token
     - /login
+    - /docs
+    - /openapi.json
     - ''

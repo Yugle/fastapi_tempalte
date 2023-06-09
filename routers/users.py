@@ -18,7 +18,7 @@ def read_users(query: UsersQuery = Depends(), db: Session = Depends(get_db)):
     return ListResponseBody(items=users.items, page_num=query.page_num, limit=query.limit, total=users.total)
 
 
-@router.get("/myself", response_class=User)
+@router.get("/myself", response_model=User)
 async def read_myself(user=Depends(get_current_active_user)):
     return user
 
