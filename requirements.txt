@@ -1,0 +1,13 @@
+fastapi
+python-multipart
+python-jose
+cryptography
+passlib
+typing
+sqlalchemy
+# pyodbc
+pymssql
+pyyaml
+uvicorn
+requests
+loguru

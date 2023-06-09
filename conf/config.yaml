@@ -1,0 +1,32 @@
+sql_server:
+    host: 127.0.0.1
+    port: 1433
+    username: root
+    password: root
+    db_name: TestDB
+
+mongo:
+    host: 127.0.0.1
+    port: 1433
+    username: root
+    password: root
+    db_name: TestDB
+
+http:
+    port: 8000
+
+sso:
+    url_to_get_token: https://xxxx/oauth2/token
+    client_id: xxxx
+    redirect_uri: https://xxxx/login
+    grant_type: authorization_code
+
+jwt:
+    secret_key: add9e81874d697ab27d7c2de6f1658180d1575a1b3dde8aef54c4850523d1129
+    algorithm: HS256
+    access_token_expire_minutes: 120
+
+ignore_auth_urls:
+    - /token
+    - /login
+    - ''
