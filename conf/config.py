@@ -42,6 +42,7 @@ IgnoreAuthUrlsConfig = List[str]
 
 class Config(BaseModel):
     sql_server: DatabaseConfig
+    mongo: DatabaseConfig
     http: HTTPConfig
     sso: SSOConfig
     jwt: JWTConfig

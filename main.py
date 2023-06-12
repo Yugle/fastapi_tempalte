@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI
+from loguru import logger
+from database.mongo import close_mongo_connection, connect_to_mongo, get_db
 from handlers import http_exception_handler, custom_http_exception_handler, validation_exception_handler
 from middlewares import AuthMiddleware, Middleware
 from routers import token, users
@@ -20,6 +22,9 @@ app.include_router(users.router)
 
 app.add_middleware(Middleware)
 app.add_middleware(AuthMiddleware)
+
+app.add_event_handler("startup", connect_to_mongo)
+app.add_event_handler("shutdown", close_mongo_connection)
 
 
 @app.get("/health")
