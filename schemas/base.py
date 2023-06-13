@@ -30,6 +30,9 @@ class PageQuery(BaseModel):
     page_num: int
     limit: int
 
+    def parse_condition_dict(self) -> dict:
+        return {key: value for key, value in self.dict().items() if key not in ['page_num', 'limit'] and value}
+
 
 class ListResultFromDB(Generic[T], BaseModel):
     total: int

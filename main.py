@@ -26,7 +26,7 @@ app.include_router(users.router)
 app.include_router(login.router)
 
 app.add_middleware(Middleware)
-app.add_middleware(AuthMiddleware)
+# app.add_middleware(AuthMiddleware)
 
 app.add_event_handler("startup", connect_to_mongo)
 app.add_event_handler("shutdown", close_mongo_connection)

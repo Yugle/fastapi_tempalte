@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 
-from dao.users import get_user
+from dao.users import get_user_by_username
 from database.mongo import get_db
 from schemas.base import HTTPException
 from schemas.users import LoginRes
@@ -15,7 +15,7 @@ router = APIRouter(
 
 @router.post("/", response_model=LoginRes)
 async def login(form_data: OAuth2PasswordRequestForm = Depends(), db=Depends(get_db)):
-    user_dict = await get_user(db, form_data.username)
+    user_dict = await get_user_by_username(db, form_data.username)
     if not user_dict or not verify_password(form_data.password, user_dict["password"]):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

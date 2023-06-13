@@ -5,24 +5,22 @@ from schemas.base import PageQuery
 
 
 class UserBase(BaseModel):
-    nt_account: str
-    email: str
-    department: str
+    username: str
     name: str
     role: int
+    company: Optional[str]
 
 
-class User(UserBase):
+class UserToCreate(UserBase):
+    password: str
+
+
+class UserRes(UserBase):
     user_id: int
-    is_active: bool = True
-
-    class Config:
-        orm_mode = True
 
 
 class UsersQuery(PageQuery):
     role: Optional[int]
-    email: Optional[str]
 
 
 class LoginRes(BaseModel):
