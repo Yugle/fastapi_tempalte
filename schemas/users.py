@@ -14,7 +14,7 @@ class UserBase(BaseModel):
 
 class User(UserBase):
     user_id: int
-    is_active: bool
+    is_active: bool = True
 
     class Config:
         orm_mode = True
@@ -23,3 +23,10 @@ class User(UserBase):
 class UsersQuery(PageQuery):
     role: Optional[int]
     email: Optional[str]
+
+
+class LoginRes(BaseModel):
+    user_id: int
+    role: int
+    access_token: str
+    expire_in: int

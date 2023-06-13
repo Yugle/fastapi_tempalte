@@ -1,5 +1,5 @@
 from loguru import logger
-from motor.motor_asyncio import AsyncIOMotorClient
+from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
 import os
 
 from conf.config import config
@@ -30,7 +30,7 @@ async def close_mongo_connection():
         logger.info("Closed mongo connection")
 
 
-def get_db():
+def get_db() -> AsyncIOMotorDatabase:
     global mongo_client
     if not mongo_client:
         connect_to_mongo()

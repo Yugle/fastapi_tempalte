@@ -1,20 +1,33 @@
 from datetime import datetime, timedelta
 from typing import Optional
+
 from conf.config import config
 from jose import JWTError, jwt
 from fastapi import Request, status
+from passlib.context import CryptContext
 
 from schemas.base import HTTPException
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+
+def verify_password(plain_password: str, hashed_password: str):
+    return pwd_context.verify(plain_password, hashed_password)
+
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
 
 
 def create_access_token(data: dict):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=int(config.jwt.access_token_expire_minutes))
+    expire = int((datetime.utcnow() +
+                 timedelta(minutes=int(config.jwt.access_token_expire_minutes))).timestamp())
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(
         to_encode, config.jwt.secret_key, algorithm=config.jwt.algorithm)
 
-    return encoded_jwt
+    return [encoded_jwt, expire]
 
 
 def decodeToken(token: str):
