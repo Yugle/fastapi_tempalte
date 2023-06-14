@@ -1,9 +1,9 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from dao.users import get_user_by_username
 from database.mongo import get_db
-from schemas.base import HTTPException
+from schemas.base import APIRouter, HTTPException
 from schemas.users import LoginRes
 from utils.utils import create_access_token, verify_password
 

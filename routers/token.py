@@ -1,9 +1,9 @@
-from fastapi import APIRouter, status
+from fastapi import status
 import base64
 import json
 import requests
 from conf.config import config
-from schemas.base import HTTPException
+from schemas.base import APIRouter, HTTPException
 
 from schemas.token import TokenResBody
 from utils.utils import create_access_token

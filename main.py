@@ -15,7 +15,7 @@ from bson import ObjectId
 
 pydantic.json.ENCODERS_BY_TYPE[ObjectId] = str
 
-app = FastAPI(exception_handlers={
+app = FastAPI(redirect_slashes=False, exception_handlers={
     StarletteHTTPException: http_exception_handler,
     HTTPException: custom_http_exception_handler,
     RequestValidationError: validation_exception_handler,

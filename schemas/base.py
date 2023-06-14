@@ -1,3 +1,6 @@
+from typing import Any, Callable
+from fastapi.types import DecoratedCallable
+from fastapi import APIRouter as FastAPIRouter
 from typing import Generic, List, Optional, TypeVar
 from pydantic import BaseModel
 from starlette.exceptions import HTTPException as StarletteHTTPException
@@ -37,3 +40,17 @@ class PageQuery(BaseModel):
 class ListResultFromDB(Generic[T], BaseModel):
     total: int
     items: List[T]
+
+
+class APIRouter(FastAPIRouter):
+    def api_route(
+        self, path: str, *, include_in_schema: bool = True, **kwargs: Any
+    ) -> Callable[[DecoratedCallable], DecoratedCallable]:
+        if path.endswith("/"):
+            path = path[:-1]
+
+        alternate_path = path + "/"
+        super().api_route(alternate_path, include_in_schema=False, **kwargs)
+        return super().api_route(
+            path, include_in_schema=include_in_schema, **kwargs
+        )

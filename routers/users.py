@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends, Body, status
+from fastapi import Depends, Body, status
 from dao.users import *
 from database.mongo import get_db
 from dependencies.users import get_current_active_user
-from schemas.base import HTTPException, ListResponseBody
+from schemas.base import APIRouter, HTTPException, ListResponseBody
 from schemas.users import UserRes, UsersQuery, UserToCreate
 
 router = APIRouter(
