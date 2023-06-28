@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 from typing import Optional
 
+from bson import ObjectId
+from bson.errors import InvalidId
+
 from conf.config import config
 from jose import JWTError, jwt
 from fastapi import Request, status
@@ -64,3 +67,17 @@ def getReqPath(request: Request) -> str:
         path = path[:-1]
 
     return path
+
+
+def get_now_unix() -> int:
+    return int(datetime.now().timestamp())
+
+
+def parse_oid(oid: str) -> ObjectId:
+    try:
+        return ObjectId(oid)
+    except InvalidId as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            message=str(e)
+        )

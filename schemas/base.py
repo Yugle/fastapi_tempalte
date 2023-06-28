@@ -1,8 +1,9 @@
 from typing import Any, Callable
+from bson import ObjectId
 from fastapi.types import DecoratedCallable
 from fastapi import APIRouter as FastAPIRouter
 from typing import Generic, List, Optional, TypeVar
-from pydantic import BaseModel
+from pydantic import BaseModel, InvalidDiscriminator
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 
@@ -54,3 +55,16 @@ class APIRouter(FastAPIRouter):
         return super().api_route(
             path, include_in_schema=include_in_schema, **kwargs
         )
+
+
+class ObjectID(str):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        try:
+            return ObjectId(str(v))
+        except InvalidDiscriminator:
+            raise ValueError("Not a valid ObjectId")
