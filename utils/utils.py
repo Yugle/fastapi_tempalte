@@ -37,19 +37,22 @@ def decodeToken(token: str):
         return None
 
 
-def verifyToken(token: Optional[str]):
+def verifyToken(token_header: Optional[str]):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        message="Could not validate credentials",
+        message="Not authenticated",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if token is None:
+
+    if token_header is None:
         raise credentials_exception
+
+    token = token_header
+    if token_header.startswith("Bearer "):
+        token = token_header.split(" ")[1]
+
     payload = decodeToken(token)
     if payload is None:
-        raise credentials_exception
-    nt_account: str = payload.get("sub")
-    if nt_account is None:
         raise credentials_exception
 
     return payload
